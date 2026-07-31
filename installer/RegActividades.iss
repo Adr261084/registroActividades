@@ -6,6 +6,7 @@
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Tu Empresa"
 #define MyAppExeName "RegActividades.App.exe"
+#define MyAppIcon "..\RegActividades.App\Assets\AppIcon.ico"
 
 [Setup]
 AppId={{8D8C0A67-2A17-4EC2-B089-25E8AFA5E5B9}
@@ -14,6 +15,8 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
+SetupIconFile={#MyAppIcon}
+UninstallDisplayIcon={app}\{#MyAppExeName}
 OutputDir=.
 OutputBaseFilename=RegActividades-Setup
 Compression=lzma
