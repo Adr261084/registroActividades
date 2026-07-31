@@ -93,14 +93,17 @@ Si te ocurre, usa `build-portable.cmd`.
 
 Si no quieres compilar, puedes descargar el paquete portable ya generado:
 
-- [artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip)
-- [artifacts/portable/RegActividades-portable-win-x64-20260731_122348.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_122348.zip)
+- [artifacts/portable/RegActividades-portable-win-x64-20260731_143110.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_143110.zip)
 
 Uso rapido:
 
 1. Descarga el ZIP del enlace.
 2. Descomprime en una carpeta local.
 3. Ejecuta `RegActividades.App.exe`.
+
+Si la ventana no aparece o la aplicacion se cierra, revisa este log:
+
+- `%LocalAppData%\RegActividades\startup.log`
 
 ## Crear instalador (.exe) con Inno Setup
 
