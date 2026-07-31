@@ -89,6 +89,18 @@ Ese ZIP se puede compartir y ejecutar sin instalar (descomprimir y abrir `RegAct
 Nota: en algunos equipos corporativos la politica de ejecucion bloquea scripts `.ps1` no firmados.
 Si te ocurre, usa `build-portable.cmd`.
 
+## Descargar portable listo para usar
+
+Si no quieres compilar, puedes descargar el paquete portable ya generado:
+
+- [artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip)
+
+Uso rapido:
+
+1. Descarga el ZIP del enlace.
+2. Descomprime en una carpeta local.
+3. Ejecuta `RegActividades.App.exe`.
+
 ## Crear instalador (.exe) con Inno Setup
 
 1. Instala Inno Setup en tu equipo.
