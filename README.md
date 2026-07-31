@@ -12,7 +12,6 @@ Cada registro guarda:
 - WPF
 - SQLite (Microsoft.Data.Sqlite)
 - Dapper
-- Inno Setup (para instalador)
 
 ## Funcionalidades
 
@@ -28,7 +27,6 @@ Cada registro guarda:
 ## Estructura del proyecto
 
 - `RegActividades.App/`: proyecto principal WPF
-- `installer/RegActividades.iss`: script de Inno Setup
 - `scripts/build-portable.ps1`: genera publicacion portable + ZIP
 - `scripts/build-portable.cmd`: alternativa portable sin bloqueo de scripts PowerShell
 
@@ -106,14 +104,6 @@ Si la ventana no aparece o la aplicacion se cierra, revisa este log:
 
 - `%LocalAppData%\RegActividades\startup.log`
 
-## Crear instalador (.exe) con Inno Setup
-
-1. Instala Inno Setup en tu equipo.
-2. Asegurate de haber ejecutado antes el `dotnet publish`.
-3. Abre y compila el script:
-   - `installer/RegActividades.iss`
-4. Se generara un instalador tipo wizard para Windows.
-
 ## Ubicacion de la base de datos local
 
 La aplicacion crea la base en:
@@ -143,5 +133,4 @@ git push -u origin main
 
 - Repositorio conectado a GitHub
 - Rama principal: `main`
-- Script de instalador listo
 - App funcional con SQLite + Dapper
