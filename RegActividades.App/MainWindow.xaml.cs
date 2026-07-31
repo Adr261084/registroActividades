@@ -75,13 +75,16 @@ CREATE TABLE IF NOT EXISTS Entradas (
         using var connection = new SqliteConnection($"Data Source={_dbPath}");
         connection.Open();
 
-        var data = connection.Query<ActivityEntry>(
+        var data = connection.Query<EntryRow>(
             "SELECT Id, Texto, FechaHora FROM Entradas ORDER BY Id DESC LIMIT 300;");
 
         _entries.Clear();
         foreach (var item in data)
         {
-            _entries.Add(item);
+            _entries.Add(new ActivityEntry(
+                item.Id,
+                item.Texto,
+                DateTime.ParseExact(item.FechaHora, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)));
         }
 
         _entriesView.Refresh();
@@ -364,3 +367,5 @@ SELECT last_insert_rowid();";
 }
 
 public sealed record ActivityEntry(long Id, string Texto, DateTime FechaHora);
+
+internal sealed record EntryRow(long Id, string Texto, string FechaHora);
