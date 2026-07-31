@@ -1,0 +1,117 @@
+﻿<Window x:Class="RegActividades.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Registro de Actividades" Height="560" Width="900" MinHeight="500" MinWidth="700">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#FFF6F8FA" BorderBrush="#FFE0E5EC" BorderThickness="1" CornerRadius="8" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="InputTextBox"
+                         Grid.Column="0"
+                         Height="34"
+                         VerticalContentAlignment="Center"
+                         FontSize="14"
+                         ToolTip="Escribe una actividad"
+                         KeyDown="InputTextBox_KeyDown" />
+
+                <Button x:Name="SaveButton"
+                        Grid.Column="2"
+                        Width="140"
+                        Height="34"
+                        Content="Guardar"
+                        Click="SaveButton_Click" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2" Background="#FFFDFEFE" BorderBrush="#FFE0E5EC" BorderThickness="1" CornerRadius="8" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="SearchTextBox"
+                         Grid.Column="0"
+                         Height="32"
+                         VerticalContentAlignment="Center"
+                         FontSize="13"
+                         ToolTip="Buscar en texto"
+                         TextChanged="SearchTextBox_TextChanged" />
+
+                <DatePicker x:Name="FromDatePicker"
+                            Grid.Column="2"
+                            Height="32"
+                            VerticalContentAlignment="Center"
+                            SelectedDateChanged="DateFilter_SelectedDateChanged" />
+
+                <DatePicker x:Name="ToDatePicker"
+                            Grid.Column="4"
+                            Height="32"
+                            VerticalContentAlignment="Center"
+                            SelectedDateChanged="DateFilter_SelectedDateChanged" />
+
+                <Button x:Name="ClearFiltersButton"
+                        Grid.Column="6"
+                        Width="120"
+                        Height="32"
+                        Content="Limpiar filtros"
+                        Click="ClearFiltersButton_Click" />
+
+                <CheckBox x:Name="RunAtStartupCheckBox"
+                          Grid.Column="8"
+                          VerticalAlignment="Center"
+                          Content="Iniciar con Windows"
+                          Checked="RunAtStartupCheckBox_Changed"
+                          Unchecked="RunAtStartupCheckBox_Changed" />
+
+                <Button x:Name="ExportCsvButton"
+                        Grid.Column="10"
+                        Width="120"
+                        Height="32"
+                        Content="Exportar CSV"
+                        Click="ExportCsvButton_Click" />
+            </Grid>
+        </Border>
+
+        <DataGrid x:Name="EntriesDataGrid"
+                  Grid.Row="4"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  HeadersVisibility="Column"
+                  AlternatingRowBackground="#FFF8FAFC"
+                  GridLinesVisibility="Horizontal"
+                  RowHeaderWidth="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80" />
+                <DataGridTextColumn Header="Texto" Binding="{Binding Texto}" Width="*" />
+                <DataGridTextColumn Header="Fecha y hora" Binding="{Binding FechaHora, StringFormat=yyyy-MM-dd HH:mm:ss}" Width="220" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
