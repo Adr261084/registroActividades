@@ -29,7 +29,7 @@ if not exist "%PUBLISH%" (
 if not exist "%ARTIFACTS%" mkdir "%ARTIFACTS%"
 
 echo Creando ZIP portable...
-tar -a -c -f "%ZIP%" -C "%PUBLISH%" .
+powershell -NoProfile -Command "Compress-Archive -Path '%PUBLISH%\*' -DestinationPath '%ZIP%' -CompressionLevel Optimal -Force"
 if errorlevel 1 exit /b 1
 
 echo Listo. Paquete generado:

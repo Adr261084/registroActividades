@@ -94,6 +94,7 @@ Si te ocurre, usa `build-portable.cmd`.
 Si no quieres compilar, puedes descargar el paquete portable ya generado:
 
 - [artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_121406.zip)
+- [artifacts/portable/RegActividades-portable-win-x64-20260731_122348.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_122348.zip)
 
 Uso rapido:
 
