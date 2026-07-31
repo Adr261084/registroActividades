@@ -11,6 +11,8 @@
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -98,15 +100,56 @@
             </Grid>
         </Border>
 
+        <Border Grid.Row="4" Background="#FFF6F8FA" BorderBrush="#FFE0E5EC" BorderThickness="1" CornerRadius="8" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Foreground="#FF5C6773"
+                           Text="Selecciona un registro para cargar su texto en la caja superior y luego actualízalo o elimínalo." />
+
+                <Button x:Name="UpdateSelectedButton"
+                        Grid.Column="2"
+                        Width="160"
+                        Height="32"
+                        Content="Actualizar texto"
+                        Click="UpdateSelectedButton_Click" />
+
+                <Button x:Name="CancelEditButton"
+                        Grid.Column="4"
+                        Width="160"
+                    Height="32"
+                    Content="Cancelar edición"
+                    Click="CancelEditButton_Click" />
+
+                <Button x:Name="DeleteSelectedButton"
+                    Grid.Column="6"
+                    Width="160"
+                        Height="32"
+                        Content="Eliminar registro"
+                        Click="DeleteSelectedButton_Click" />
+            </Grid>
+        </Border>
+
         <DataGrid x:Name="EntriesDataGrid"
-                  Grid.Row="4"
+                  Grid.Row="6"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   HeadersVisibility="Column"
                   AlternatingRowBackground="#FFF8FAFC"
                   GridLinesVisibility="Horizontal"
-                  RowHeaderWidth="0">
+                  RowHeaderWidth="0"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  SelectionChanged="EntriesDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80" />
                 <DataGridTextColumn Header="Texto" Binding="{Binding Texto}" Width="*" />

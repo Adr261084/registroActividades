@@ -173,6 +173,19 @@ SELECT last_insert_rowid();";
         _entriesView.Refresh();
     }
 
+    private void EntriesDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (EntriesDataGrid.SelectedItem is not ActivityEntry selectedEntry)
+        {
+            return;
+        }
+
+        InputTextBox.Text = selectedEntry.Texto;
+        InputTextBox.CaretIndex = InputTextBox.Text.Length;
+        InputTextBox.SelectAll();
+        InputTextBox.Focus();
+    }
+
     private void InputTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         if (e.Key == Key.Enter)
@@ -180,6 +193,106 @@ SELECT last_insert_rowid();";
             SaveEntry();
             e.Handled = true;
         }
+    }
+
+    private void UpdateSelectedButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (EntriesDataGrid.SelectedItem is not ActivityEntry selectedEntry)
+        {
+            System.Windows.MessageBox.Show("Selecciona un registro antes de actualizarlo.", "Actualizar registro");
+            return;
+        }
+
+        var newText = InputTextBox.Text?.Trim();
+        if (string.IsNullOrWhiteSpace(newText))
+        {
+            System.Windows.MessageBox.Show("El texto no puede quedar vacío.", "Actualizar registro");
+            return;
+        }
+
+        if (string.Equals(selectedEntry.Texto, newText, StringComparison.CurrentCulture))
+        {
+            return;
+        }
+
+        using var connection = new SqliteConnection($"Data Source={_dbPath}");
+        connection.Open();
+
+        const string updateSql = @"
+UPDATE Entradas
+SET Texto = @Texto
+WHERE Id = @Id;";
+
+        var affectedRows = connection.Execute(updateSql, new
+        {
+            Texto = newText,
+            Id = selectedEntry.Id
+        });
+
+        if (affectedRows == 0)
+        {
+            System.Windows.MessageBox.Show("No se encontró el registro para actualizar.", "Actualizar registro");
+            return;
+        }
+
+        ReplaceEntry(selectedEntry with { Texto = newText });
+        EntriesDataGrid.SelectedItem = _entries.FirstOrDefault(entry => entry.Id == selectedEntry.Id);
+        _entriesView.Refresh();
+    }
+
+    private void DeleteSelectedButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (EntriesDataGrid.SelectedItem is not ActivityEntry selectedEntry)
+        {
+            System.Windows.MessageBox.Show("Selecciona un registro antes de eliminarlo.", "Eliminar registro");
+            return;
+        }
+
+        var confirmation = System.Windows.MessageBox.Show(
+            $"¿Eliminar el registro #{selectedEntry.Id}?\n\n{selectedEntry.Texto}",
+            "Eliminar registro",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (confirmation != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        using var connection = new SqliteConnection($"Data Source={_dbPath}");
+        connection.Open();
+
+        const string deleteSql = @"
+DELETE FROM Entradas
+WHERE Id = @Id;";
+
+        var affectedRows = connection.Execute(deleteSql, new
+        {
+            Id = selectedEntry.Id
+        });
+
+        if (affectedRows == 0)
+        {
+            System.Windows.MessageBox.Show("No se encontró el registro para eliminar.", "Eliminar registro");
+            return;
+        }
+
+        var entryIndex = _entries.IndexOf(selectedEntry);
+        if (entryIndex >= 0)
+        {
+            _entries.RemoveAt(entryIndex);
+        }
+
+        EntriesDataGrid.SelectedItem = null;
+        InputTextBox.Clear();
+        _entriesView.Refresh();
+    }
+
+    private void CancelEditButton_Click(object sender, RoutedEventArgs e)
+    {
+        EntriesDataGrid.SelectedItem = null;
+        InputTextBox.Clear();
+        InputTextBox.Focus();
     }
 
     private void ExportCsvButton_Click(object sender, RoutedEventArgs e)
@@ -340,6 +453,17 @@ SELECT last_insert_rowid();";
         Activate();
     }
 
+    private void ReplaceEntry(ActivityEntry updatedEntry)
+    {
+        var index = _entries.FindIndex(entry => entry.Id == updatedEntry.Id);
+        if (index < 0)
+        {
+            return;
+        }
+
+        _entries[index] = updatedEntry;
+    }
+
     private void ExitApplication()
     {
         _isExiting = true;
@@ -369,3 +493,19 @@ SELECT last_insert_rowid();";
 public sealed record ActivityEntry(long Id, string Texto, DateTime FechaHora);
 
 internal sealed record EntryRow(long Id, string Texto, string FechaHora);
+
+internal static class ObservableCollectionExtensions
+{
+    public static int FindIndex<T>(this ObservableCollection<T> collection, Predicate<T> match)
+    {
+        for (var index = 0; index < collection.Count; index++)
+        {
+            if (match(collection[index]))
+            {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+}
