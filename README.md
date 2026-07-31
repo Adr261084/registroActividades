@@ -28,6 +28,8 @@ Cada registro guarda:
 
 - `RegActividades.App/`: proyecto principal WPF
 - `installer/RegActividades.iss`: script de Inno Setup
+- `scripts/build-portable.ps1`: genera publicacion portable + ZIP
+- `scripts/build-portable.cmd`: alternativa portable sin bloqueo de scripts PowerShell
 
 ## Requisitos
 
@@ -63,6 +65,29 @@ dotnet publish .\RegActividades.App\RegActividades.App.csproj -c Release -r win-
 Salida esperada:
 
 - `RegActividades.App/bin/Release/net8.0-windows/win-x64/publish/RegActividades.App.exe`
+
+## Generar version portable (sin instalador)
+
+### Opcion recomendada en entorno empresarial (.cmd)
+
+```bat
+scripts\build-portable.cmd
+```
+
+### Opcion PowerShell (.ps1)
+
+```powershell
+.\scripts\build-portable.ps1
+```
+
+El script crea un ZIP en:
+
+- `artifacts/portable/RegActividades-portable-win-x64-<timestamp>.zip`
+
+Ese ZIP se puede compartir y ejecutar sin instalar (descomprimir y abrir `RegActividades.App.exe`).
+
+Nota: en algunos equipos corporativos la politica de ejecucion bloquea scripts `.ps1` no firmados.
+Si te ocurre, usa `build-portable.cmd`.
 
 ## Crear instalador (.exe) con Inno Setup
 
