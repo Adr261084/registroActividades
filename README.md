@@ -23,6 +23,7 @@ Cada registro guarda:
 - Exportacion CSV (respetando filtros activos)
 - Opcion Iniciar con Windows
 - Integracion con bandeja del sistema (area de notificaciones)
+- Icono personalizado en la aplicacion y en la bandeja del sistema
 
 ## Estructura del proyecto
 
@@ -93,7 +94,7 @@ Si te ocurre, usa `build-portable.cmd`.
 
 Si no quieres compilar, puedes descargar el paquete portable ya generado:
 
-- [artifacts/portable/RegActividades-portable-win-x64-20260731_143110.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_143110.zip)
+- [artifacts/portable/RegActividades-portable-win-x64-20260731_144429.zip](artifacts/portable/RegActividades-portable-win-x64-20260731_144429.zip)
 
 Uso rapido:
 

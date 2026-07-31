@@ -285,9 +285,11 @@ SELECT last_insert_rowid();";
 
     private void InitializeTrayIcon()
     {
+        var trayIcon = GetApplicationIcon();
+
         _notifyIcon = new Forms.NotifyIcon
         {
-            Icon = SystemIcons.Application,
+            Icon = trayIcon,
             Visible = true,
             Text = "Registro de Actividades"
         };
@@ -298,6 +300,21 @@ SELECT last_insert_rowid();";
         contextMenu.Items.Add("Abrir", null, (_, _) => RestoreFromTray());
         contextMenu.Items.Add("Salir", null, (_, _) => ExitApplication());
         _notifyIcon.ContextMenuStrip = contextMenu;
+    }
+
+    private static System.Drawing.Icon GetApplicationIcon()
+    {
+        var processPath = Environment.ProcessPath;
+        if (!string.IsNullOrWhiteSpace(processPath))
+        {
+            var associatedIcon = System.Drawing.Icon.ExtractAssociatedIcon(processPath);
+            if (associatedIcon is not null)
+            {
+                return associatedIcon;
+            }
+        }
+
+        return System.Drawing.SystemIcons.Application;
     }
 
     private void MainWindow_StateChanged(object? sender, EventArgs e)
